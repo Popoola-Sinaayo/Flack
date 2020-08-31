@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+       var socket = io();
+        socket.on('connect', function() {
+            socket.emit('my event', data="I'm not connected");
+      })
+              socket.on("response", function(data) {
+          document.querySelector("#connect").innerHTML = data
+        })
+        document.addEventListener("DOMContentLoaded", () => {
+          document.querySelector("button").onclick = ()=> {
+          console.log(document.querySelector("#FullName").value)
+          console.log(document.querySelector("#Commented").value)
+           socket.on("response", function() {
+             socket.emit("responses", FullName=document.querySelector("#FullName").value, Commented=document.querySelector("#Commented").value)
+           })
+       };
+
+        })
+        socket.on("Commenteds", function(FullName, Commented) {
+          console.log("detected")
+          document.querySelector("#Full_Name").innerHTML = FullName;
+          document.querySelector("#Comments").innerHTML = Commented
+        })
+    </script>
+  </head>
+  <body>
+    <h1>ChatAPP</h1>
+      Happy Chatting
+      <p id="connect">{{ data }}</p>
+      <h1>Comment:</h1>
+      <>
+        <label for="Comment">FullName</label>
+        <input type="text" name="Name" placeholder="Input your name" id="FullName">
+        <label for="Comment">Comment</label>
+        <textarea name="name" rows="8" cols="80" placeholder="Comment" id="Commented"></textarea>
+        <button>Submit</button>
+      </form>
+      <h6 id="Full_Name">{{FullName}}</h6>
+      <p id="Comments">{{commented}}</p>
+  </body>
+</html>
